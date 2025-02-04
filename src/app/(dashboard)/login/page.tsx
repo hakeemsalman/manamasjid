@@ -1,5 +1,5 @@
-import { LoginForm } from "@/components/login-form"
-
+import { LoginForm } from "@/components/login-form";
+import "@/app/globals.css";
 export default function Page() {
   return (
     <div className="flex min-h-svh w-full items-center justify-center p-6 md:p-10">
@@ -7,5 +7,5 @@ export default function Page() {
         <LoginForm />
       </div>
     </div>
-  )
+  );
 }
