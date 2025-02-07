@@ -8,7 +8,7 @@ import {
 } from "./ui/dropdown-menu";
 import { Avatar, AvatarFallback } from "./ui/avatar";
 import { signout } from "@/app/(dashboard)/login/actions";
-import { LayoutDashboard, LogOut } from "lucide-react";
+import { Home, LayoutDashboard, LogOut } from "lucide-react";
 
 export default async function LoggedUser({ userName }: { userName: string }) {
   return (
@@ -22,6 +22,12 @@ export default async function LoggedUser({ userName }: { userName: string }) {
           </Avatar>
         </DropdownMenuTrigger>
         <DropdownMenuContent>
+          <a href="/">
+            <DropdownMenuItem>
+              <Home />
+              <span>Home</span>
+            </DropdownMenuItem>
+          </a>
           <a href="/dashboard">
             <DropdownMenuItem>
               <LayoutDashboard />
