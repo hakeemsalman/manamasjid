@@ -15,6 +15,7 @@ import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { createClient } from "@/utils/supabase/client";
 import { z } from "zod";
+import { User } from "@supabase/supabase-js";
 
 type PrayerTimeField =
   | "name"
@@ -55,9 +56,8 @@ const prayerTimesSchema = z.object({
   email: z.string(),
 });
 
-export default function UserForm() {
+export default function UserForm({ user }: { user: User | null }) {
   const [loading, setLoading] = useState(false);
-  const [supaUser, setSupaUser] = useState<string | undefined>("");
   const supabase = createClient();
 
   const form = useForm<z.infer<typeof prayerTimesSchema>>({
@@ -77,10 +77,6 @@ export default function UserForm() {
   useEffect(() => {
     async function getMasjidDetails() {
       try {
-        const {
-          data: { user },
-        } = await supabase.auth.getUser();
-        setSupaUser(user?.id);
         const { data, error } = await supabase
           .from("masjids")
           .select("*")
@@ -109,10 +105,10 @@ export default function UserForm() {
   async function onSubmit(values: z.infer<typeof prayerTimesSchema>) {
     try {
       setLoading(true);
-      console.log({ ...values, profile_id: supaUser });
+      console.log({ ...values, profile_id: user?.id });
       const { error } = await supabase
         .from("masjids")
-        .upsert({ ...values, profile_id: supaUser });
+        .upsert({ ...values, profile_id: user?.id });
       if (error) throw error;
     } catch (error: any) {
       throw new Error(error);

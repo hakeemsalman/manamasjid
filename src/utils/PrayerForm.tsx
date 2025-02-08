@@ -15,6 +15,8 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { User } from "@supabase/supabase-js";
+import { useState } from "react";
+import Error from "next/error";
 import { createClient } from "./supabase/client";
 
 type PrayerTimeField = "fajr" | "zohar" | "asr" | "maghrib" | "isha";
@@ -27,7 +29,7 @@ const prayerTimeFields: PrayerTimeField[] = [
   "isha",
 ];
 const prayerTimesSchema = z.object({
-  masjid_id: z.string().uuid(), // Masjid ID is a UUID and read-only
+  masjid_id: z.string(),
   fajr: z.string().regex(/^\d{2}:\d{2}$/, "Fajr must be in HH:MM format"),
   zohar: z.string().regex(/^\d{2}:\d{2}$/, "Dhuhr must be in HH:MM format"),
   asr: z.string().regex(/^\d{2}:\d{2}$/, "Asr must be in HH:MM format"),
@@ -36,21 +38,51 @@ const prayerTimesSchema = z.object({
   maghrib_waqf: z.number().optional(),
 });
 
-export function PrayerForm({ user }: { user: User | null }) {
-  const supabase = createClient();
+export function PrayerForm({
+  user,
+  prayerData,
+}: {
+  user: User | null;
+  prayerData: { name: string; id: string } | null;
+}) {
+  const [loading, setLoading] = useState(false);
+  const [submitted, setSubmiited] = useState("");
   // 1. Define your form.
   const form = useForm<z.infer<typeof prayerTimesSchema>>({
     resolver: zodResolver(prayerTimesSchema),
     defaultValues: {
-      masjid_id: user?.id,
+      masjid_id: prayerData?.name ?? "",
     },
   });
 
+  const supabase = createClient();
   // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof prayerTimesSchema>) {
-    console.log(values);
+  async function onSubmit(values: z.infer<typeof prayerTimesSchema>) {
+    try {
+      setLoading(true);
+      const modifiedData = {
+        ...values,
+        date: new Date().toISOString(),
+        created_by: user?.id,
+        masjid_id: prayerData?.id ?? "",
+      };
+      console.log(modifiedData);
+      const { data, error } = await supabase
+        .from("prayer_times")
+        .insert(modifiedData);
+      console.log(data);
+      // setSubmitted(result);
+      if (error) throw error;
+    } catch (error: any) {
+      throw new Error(error);
+    } finally {
+      setLoading(false);
+    }
   }
 
+  if (loading) {
+    return <span>Loading</span>;
+  }
   return (
     <div className="flex w-full items-center justify-center">
       <div className="w-full max-w-sm">
@@ -59,18 +91,17 @@ export function PrayerForm({ user }: { user: User | null }) {
             <FormField
               control={form.control}
               name="masjid_id"
-              render={({ field: { onChange } }) => (
+              render={({ field: { onChange, value } }) => (
                 <FormItem>
                   <FormLabel>Masjid Id</FormLabel>
                   <FormControl>
                     <Input
-                      name={user?.id}
-                      value={user?.id.slice(0, 8).toUpperCase()}
+                      name="name"
+                      value={value}
                       onChange={onChange}
                       disabled
                     />
                   </FormControl>
-                  <FormDescription>This is your Masjid Id.</FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
@@ -116,7 +147,7 @@ export function PrayerForm({ user }: { user: User | null }) {
             />
 
             <Button className="mt-10 w-full" type="submit">
-              Submit
+              Update
             </Button>
           </form>
         </Form>
