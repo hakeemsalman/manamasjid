@@ -39,7 +39,7 @@ export async function updateSession(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser();
 
-  const protectedRoutes = ["/dashboard"];
+  const protectedRoutes = ["/dashboard","/profile"];
 
  if (!user && protectedRoutes.some((route) => request.nextUrl.pathname.startsWith(route))) {
   const url = request.nextUrl.clone();
