@@ -29,11 +29,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.className} antialiased `}>
-        <div className="mx-10 md:mx-32 h-[calc(100svh-56px)]">
+        <div className="mx-10 md:mx-32">
           <Navbar />
           {children}
         </div>
-        <Banner />
+        <div className="fixed bottom-0 w-full">
+          <Banner />
+        </div>
       </body>
     </html>
   );

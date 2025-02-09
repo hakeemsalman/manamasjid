@@ -13,12 +13,14 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body >
+      <body>
         <div className="mx-10 md:mx-32">
-        <Navbar />
-        {children}
+          <Navbar />
+          {children}
         </div>
-        <Banner />
+        <div className="fixed bottom-0 w-full">
+          <Banner />
+        </div>
       </body>
     </html>
   );
