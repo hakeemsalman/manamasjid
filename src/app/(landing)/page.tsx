@@ -25,7 +25,7 @@ export default async function Home() {
   const names = await getMasjidNames();
 
   return (
-    <div className="flex flex-col items-center w-full gap-5 px-3">
+    <div className="flex flex-col items-center w-full gap-5 px-3 py-10">
       <div className="w-full md:max-w-sm">
         <PrayerCard masjidList={names} />
       </div>

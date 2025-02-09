@@ -45,7 +45,7 @@ export default function PrayerCard({
     }
   };
   return (
-    <div>
+    <>
       <Label>Please Select Masjid</Label>
       <MasjidSelector items={masjidList} change={handleChange} />
       <div className="flex flex-col w-full gap-5 px-3 py-10">
@@ -53,7 +53,9 @@ export default function PrayerCard({
           <PrayerList key={index} time={item.time} value={item.value} />
         ))}
       </div>
-      {updatedDate && <span>Last updated: {updatedDate} </span>}
-    </div>
+      {updatedDate && (
+        <span className="px-5">Last updated: {updatedDate} </span>
+      )}
+    </>
   );
 }
