@@ -18,6 +18,7 @@ export function LoginForm({
   ...props
 }: React.ComponentPropsWithoutRef<"div">) {
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault(); // Prevents page reload
@@ -25,9 +26,14 @@ export function LoginForm({
 
     try {
       const formData = new FormData(e.currentTarget); // ✅ Extract form data
-      await login(formData); // Assuming login is an async function
+      const response = await login(formData);
+
+      if (response?.success === false) {
+        setErrorMessage(response.message); // ✅ Show error message if login fails
+      }
     } catch (error) {
       console.error("Login failed:", error);
+      setErrorMessage("Something went wrong. Please try again.");
     } finally {
       setIsLoading(false); // Reset loading state after login attempt
     }
@@ -66,6 +72,11 @@ export function LoginForm({
                 </div>
                 <Input id="password" name="password" type="password" required />
               </div>
+              {errorMessage && (
+                <p className="text-red-500 text-sm text-center">
+                  {errorMessage}
+                </p>
+              )}
               <Button type="submit" disabled={isLoading} className="w-full">
                 {isLoading ? "Loading..." : "Login"}
               </Button>

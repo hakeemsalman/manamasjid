@@ -20,7 +20,11 @@ export async function login(formData: FormData) {
 
   if (error) {
     console.log(error);
-    redirect("/error");
+    return {
+      success: false,
+      message: "Invalid credentials. Please try again.",
+    };
+    // redirect("/error");
   }
 
   revalidatePath("/", "layout");
