@@ -4,8 +4,8 @@ export default function Banner() {
   return (
     <div
       role="alert"
-      className="mt-5 justify-center relative flex w-full p-2 text-sm text-white  bg-[linear-gradient(-45deg,_#1E3A8A_25%,_transparent_25%,_transparent_50%,_#1E3A8A_50%,_#1E3A8A_75%,_transparent_75%,_transparent)] 
-  bg-[size:50px_50px] bg-blue-700 "
+      className="mt-5 justify-center relative flex w-full p-2 text-sm text-white  bg-[linear-gradient(-45deg,_#1818181a_25%,_transparent_25%,_transparent_50%,_#1818181a_50%,_#1818181a_75%,_transparent_75%,_transparent)] 
+  bg-[size:50px_50px] bg-[#747474] "
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"

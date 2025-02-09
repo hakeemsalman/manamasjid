@@ -4,6 +4,10 @@ import React from "react";
 import LoggedUser from "../LoggedUser";
 import { Button } from "./button";
 import { redirect } from "next/navigation";
+import { Poppins } from "next/font/google";
+import Link from "next/link";
+
+const poppins = Poppins({ weight: ["500"], subsets: ["latin"] });
 
 export default async function Navbar() {
   const supabase = await createClient();
@@ -12,10 +16,13 @@ export default async function Navbar() {
     .toUpperCase();
   console.log(getEmailName);
   return (
-    <div className="flex justify-between px-4 md:p-8 py-5">
-      <div id="logo">
-        <Image src={"/mosque-512.png"} width={20} height={20} alt="logo" />
-      </div>
+    <div className="flex justify-between items-center px-4 md:p-8 py-5">
+      <Link href={"/"}>
+        <div id="logo" className={`${poppins.className}`}>
+          <span>Manamasjid</span>
+          {/* <Image src={"/mosque-512.png"} width={20} height={20} alt="logo" /> */}
+        </div>
+      </Link>
       {getEmailName ? (
         <LoggedUser userName={getEmailName} />
       ) : (
