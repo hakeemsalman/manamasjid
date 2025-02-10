@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Label } from "./ui/label";
 import MasjidSelector from "./masjid-selector";
 import PrayerList from "./ui/prayer-list";
@@ -14,11 +14,11 @@ export default function PrayerCard({
       }[]
     | undefined;
 }) {
+  /* eslint-disable  @typescript-eslint/no-explicit-any */
   const [prayerData, setPrayerData] = useState<any[]>([]);
   const [updatedDate, setUpdatedDate] = useState<string>("");
 
   async function getModifiedData(data: any) {
-    console.log("modifying data", data);
     return data.map((item: any) => {
       return [
         { time: "fajr", value: item.fajr },
@@ -38,7 +38,6 @@ export default function PrayerCard({
       );
       const [modifiedData] = await getModifiedData(data);
       setUpdatedDate(new Date(data[0].created_at).toDateString());
-      console.log("prayer-card", modifiedData);
       setPrayerData(modifiedData);
     } catch (error) {
       throw error;

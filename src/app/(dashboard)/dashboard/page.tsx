@@ -15,7 +15,6 @@ export default async function Dashboard() {
     .eq("profile_id", user?.id)
     .order("created_at", { ascending: true })
     .single();
-  // console.log(data);
   return (
     <div className="pt-10 pb-5">
       <PrayerForm user={user} prayerData={data} />

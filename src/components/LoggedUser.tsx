@@ -9,6 +9,7 @@ import {
 import { Avatar, AvatarFallback } from "./ui/avatar";
 import { signout } from "@/app/(dashboard)/login/actions";
 import { Home, LayoutDashboard, LogOut, User2 } from "lucide-react";
+import Link from "next/link";
 
 export default async function LoggedUser({ userName }: { userName: string }) {
   return (
@@ -22,24 +23,24 @@ export default async function LoggedUser({ userName }: { userName: string }) {
           </Avatar>
         </DropdownMenuTrigger>
         <DropdownMenuContent>
-          <a href="/">
+          <Link href="/">
             <DropdownMenuItem>
               <Home />
               <span>Home</span>
             </DropdownMenuItem>
-          </a>
-          <a href="/dashboard">
+          </Link>
+          <Link href="/dashboard">
             <DropdownMenuItem>
               <LayoutDashboard />
               <span>Dashboard</span>
             </DropdownMenuItem>
-          </a>
-          <a href="/profile">
+          </Link>
+          <Link href="/profile">
             <DropdownMenuItem>
               <User2 />
               <span>Profile</span>
             </DropdownMenuItem>
-          </a>
+          </Link>
           <DropdownMenuSeparator />
           <DropdownMenuItem onClick={signout}>
             <LogOut />

@@ -6,14 +6,22 @@ export async function updateSession(request: NextRequest) {
     request,
   });
 
-  const allowedOrigin = "https://manamasjid.vercel.app"; // ✅ Change to your domain
+  
+  const allowedOrigins = [
+    "http://localhost:3000",
+    "https://myproductiondomain.com",
+  ];
+  
   const origin = request.headers.get("origin") || request.headers.get("referer");
+  const host = request.headers.get("host"); // Get the host header
 
-  // 🚫 Block requests from unknown sources
-  if (!origin || !origin.startsWith(allowedOrigin)) {
+  
+  // ✅ Allow requests with no origin but from the same host
+  if (!origin && host === "localhost:3000") {
+  } else if (!origin || !allowedOrigins.some((allowed) => origin.startsWith(allowed))) {
     return new NextResponse("Forbidden", { status: 403 });
   }
-
+  
   const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
@@ -23,7 +31,7 @@ export async function updateSession(request: NextRequest) {
           return request.cookies.getAll();
         },
         setAll(cookiesToSet) {
-          cookiesToSet.forEach(({ name, value, options }) =>
+          cookiesToSet.forEach(({ name, value }) =>
             request.cookies.set(name, value)
           );
           supabaseResponse = NextResponse.next({

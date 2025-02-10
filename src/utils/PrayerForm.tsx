@@ -7,7 +7,6 @@ import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -46,8 +45,6 @@ export function PrayerForm({
   prayerData: { name: string; id: string } | null;
 }) {
   const [loading, setLoading] = useState(false);
-  const [submitted, setSubmiited] = useState("");
-  // 1. Define your form.
   const form = useForm<z.infer<typeof prayerTimesSchema>>({
     resolver: zodResolver(prayerTimesSchema),
     defaultValues: {
@@ -66,13 +63,12 @@ export function PrayerForm({
         created_by: user?.id,
         masjid_id: prayerData?.id ?? "",
       };
-      console.log(modifiedData);
       const { data, error } = await supabase
         .from("prayer_times")
         .insert(modifiedData);
-      console.log(data);
       // setSubmitted(result);
       if (error) throw error;
+      /* eslint-disable  @typescript-eslint/no-explicit-any */
     } catch (error: any) {
       throw new Error(error);
     } finally {

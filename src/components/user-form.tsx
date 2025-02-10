@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -101,15 +100,15 @@ export default function UserForm({ user }: { user: User | null }) {
     }
 
     getMasjidDetails();
-  }, [form.setValue]);
+  }, [form, user, supabase]);
   async function onSubmit(values: z.infer<typeof prayerTimesSchema>) {
     try {
       setLoading(true);
-      console.log({ ...values, profile_id: user?.id });
       const { error } = await supabase
         .from("masjids")
         .upsert({ ...values, profile_id: user?.id });
       if (error) throw error;
+      /* eslint-disable  @typescript-eslint/no-explicit-any */
     } catch (error: any) {
       throw new Error(error);
     } finally {

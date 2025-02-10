@@ -1,9 +1,7 @@
 import { createClient } from "@/utils/supabase/server";
-import Image from "next/image";
 import React from "react";
 import LoggedUser from "../LoggedUser";
 import { Button } from "./button";
-import { redirect } from "next/navigation";
 import { Poppins } from "next/font/google";
 import Link from "next/link";
 
@@ -14,7 +12,6 @@ export default async function Navbar() {
   const getEmailName = (await supabase.auth.getUser()).data.user?.email
     ?.slice(0, 2)
     .toUpperCase();
-  console.log(getEmailName);
   return (
     <div className="flex justify-between items-center px-4 md:p-8 py-5">
       <Link href={"/"}>

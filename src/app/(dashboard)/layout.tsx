@@ -14,7 +14,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <div className="mx-10 md:mx-32">
+        <div className="mx-10 md:mx-32 py-20">
           <Navbar />
           {children}
         </div>

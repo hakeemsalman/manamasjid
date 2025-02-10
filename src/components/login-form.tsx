@@ -10,8 +10,8 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { login, signup } from "@/app/(dashboard)/login/actions";
-import { FormEvent, FormEventHandler, useState } from "react";
+import { login } from "@/app/(dashboard)/login/actions";
+import { FormEvent, useState } from "react";
 
 export function LoginForm({
   className,

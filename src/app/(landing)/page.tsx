@@ -6,6 +6,7 @@ export default async function Home() {
   const supabase = await createClient();
 
   async function getModifiedData(
+    /* eslint-disable  @typescript-eslint/no-explicit-any */
     data: any[]
   ): Promise<{ label: string; value: string }[]> {
     return data.map((items) => ({
@@ -19,7 +20,9 @@ export default async function Home() {
       const { data, error } = await supabase.from("masjids").select("*");
       if (error) throw error;
       return await getModifiedData(data || []);
-    } catch (error) {}
+    } catch (error) {
+      throw error;
+    }
   }
 
   const names = await getMasjidNames();
