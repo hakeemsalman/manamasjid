@@ -13,7 +13,7 @@ export async function updateSession(request: NextRequest) {
   ];
   
   const origin = request.headers.get("origin") || request.headers.get("referer");
-  const host = request.headers.get("host"); // Get the host header
+  // const host = request.headers.get("host"); // Get the host header
 
   // ✅ Allow requests from trusted origins
   if (!origin || !allowedOrigins.some((allowed) => origin.startsWith(allowed))) {
