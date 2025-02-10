@@ -29,7 +29,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.className} antialiased `}>
-        <div className="mx-10 md:mx-32">
+        <div className="">
           <Navbar />
           {children}
         </div>

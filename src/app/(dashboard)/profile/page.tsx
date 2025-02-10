@@ -9,7 +9,7 @@ export default async function page() {
     data: { user },
   } = await supabase.auth.getUser();
   return (
-    <div>
+    <div className="pt-10 pb-20">
       <UserForm user={user} />
     </div>
   );

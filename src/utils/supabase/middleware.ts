@@ -9,12 +9,18 @@ export async function updateSession(request: NextRequest) {
   
   const allowedOrigins = [
     "https://vercel.com/",
-    "https://manamasjid.vercel.app",  // ✅ Allow your own domain
+    "https://manamasjid.vercel.app/",  // ✅ Allow your own domain
+    "http://localhost:3000"
   ];
   
   const origin = request.headers.get("origin") || request.headers.get("referer");
-  // const host = request.headers.get("host"); // Get the host header
-
+  const host = request.headers.get("host"); // Get the host header
+  
+  // ✅ Allow requests from the same host even if `origin` is missing
+  if (!origin && host === "localhost:3000") {
+    
+  }
+  
   // ✅ Allow requests from trusted origins
   if (!origin || !allowedOrigins.some((allowed) => origin.startsWith(allowed))) {
     return new NextResponse("Forbidden", { status: 403 });

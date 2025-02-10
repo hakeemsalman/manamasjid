@@ -16,7 +16,7 @@ export default async function Dashboard() {
     .order("created_at", { ascending: true })
     .single();
   return (
-    <div className="pt-10 pb-5">
+    <div className="pt-10 pb-20">
       <PrayerForm user={user} prayerData={data} />
     </div>
   );
