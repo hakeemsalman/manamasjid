@@ -63,7 +63,7 @@ export function PrayerForm({
         created_by: user?.id,
         masjid_id: prayerData?.id ?? "",
       };
-      const { data, error } = await supabase
+      const { error } = await supabase
         .from("prayer_times")
         .insert(modifiedData);
       // setSubmitted(result);
