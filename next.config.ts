@@ -8,7 +8,7 @@ const nextConfig: NextConfig = {
         source: "/api/:path*",
         headers: [
           { key: "Access-Control-Allow-Credentials", value: "true" },
-          { key: "Access-Control-Allow-Origin", value: "http://localhost:3000" }, // ✅ Only allow your domain
+          { key: "Access-Control-Allow-Origin", value: "https://manamasjid.vercel.app" },
           { key: "Access-Control-Allow-Methods", value: "GET,OPTIONS,POST" },
           {
             key: "Access-Control-Allow-Headers",

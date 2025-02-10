@@ -8,17 +8,16 @@ export async function updateSession(request: NextRequest) {
 
   
   const allowedOrigins = [
-    "http://localhost:3000",
-    "https://myproductiondomain.com",
+    "https://manamasjid.vercel.app",
   ];
   
   const origin = request.headers.get("origin") || request.headers.get("referer");
-  const host = request.headers.get("host"); // Get the host header
+  // const host = request.headers.get("host"); // Get the host header
 
   
   // ✅ Allow requests with no origin but from the same host
-  if (!origin && host === "localhost:3000") {
-  } else if (!origin || !allowedOrigins.some((allowed) => origin.startsWith(allowed))) {
+  // if (!origin && host === "localhost:3000") {
+ if (!origin || !allowedOrigins.some((allowed) => origin.startsWith(allowed))) {
     return new NextResponse("Forbidden", { status: 403 });
   }
   
