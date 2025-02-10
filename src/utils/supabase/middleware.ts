@@ -9,7 +9,7 @@ export async function updateSession(request: NextRequest) {
   
   const allowedOrigins = [
     "http://localhost:3000",
-    "https://myproductiondomain.com",
+    "https://manamasjid.vercel.app",
   ];
   
   const origin = request.headers.get("origin") || request.headers.get("referer");
