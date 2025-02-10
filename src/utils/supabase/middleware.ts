@@ -8,19 +8,17 @@ export async function updateSession(request: NextRequest) {
 
   
   const allowedOrigins = [
-    "https://manamasjid.vercel.app",
+    "https://vercel.com/",
+    "https://manamasjid.vercel.app",  // ✅ Allow your own domain
   ];
   
   const origin = request.headers.get("origin") || request.headers.get("referer");
-  // const host = request.headers.get("host"); // Get the host header
+  const host = request.headers.get("host"); // Get the host header
 
-  
-  // ✅ Allow requests with no origin but from the same host
-  // if (!origin && host === "localhost:3000") {
- if (!origin || !allowedOrigins.some((allowed) => origin.startsWith(allowed))) {
+  // ✅ Allow requests from trusted origins
+  if (!origin || !allowedOrigins.some((allowed) => origin.startsWith(allowed))) {
     return new NextResponse("Forbidden", { status: 403 });
   }
-  
   const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
